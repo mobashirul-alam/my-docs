@@ -1,7 +1,9 @@
 "use client";
 
 import { useEditorStore } from "@/store/use-editor-store";
+import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
+import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -66,6 +68,10 @@ export const Editor = () => {
             Underline,
             FontFamily,
             TextStyle,
+            Color,
+            Highlight.configure({
+                multicolor: true,
+            }),
         ],
         content: "<p>Hello World! 🌎️</p>",
     });
