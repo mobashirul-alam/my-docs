@@ -1,5 +1,6 @@
 "use client";
 
+import { FontSizeExtension } from "@/extensions/font-size";
 import { useEditorStore } from "@/store/use-editor-store";
 import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
@@ -82,6 +83,7 @@ export const Editor = () => {
             TextAlign.configure({
                 types: ["heading", "paragraph"],
             }),
+            FontSizeExtension, // custom extension
         ],
         content: "<p>Hello World! 🌎️</p>",
     });
