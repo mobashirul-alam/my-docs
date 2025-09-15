@@ -89,7 +89,6 @@ export const Editor = () => {
             FontSizeExtension, // custom extension
             LineHeightExtension, // custom extension
         ],
-        content: "<p>Hello World! 🌎️</p>",
     });
 
     return (
