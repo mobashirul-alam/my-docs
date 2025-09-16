@@ -1,3 +1,4 @@
+import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -20,7 +21,7 @@ export const Navbar = () => {
             <Suspense fallback={<div className="flex-1" />}>
                 <SearchInput />
             </Suspense>
-            <div></div>
+            <UserButton />
         </nav>
     );
 };
