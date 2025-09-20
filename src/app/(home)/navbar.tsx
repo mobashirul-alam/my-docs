@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -21,7 +21,15 @@ export const Navbar = () => {
             <Suspense fallback={<div className="flex-1" />}>
                 <SearchInput />
             </Suspense>
-            <UserButton />
+            <div className="flex gap-3 items-center pl-6">
+                <OrganizationSwitcher
+                    afterCreateOrganizationUrl="/"
+                    afterLeaveOrganizationUrl="/"
+                    afterSelectOrganizationUrl="/"
+                    afterSelectPersonalUrl="/"
+                />
+                <UserButton />
+            </div>
         </nav>
     );
 };
