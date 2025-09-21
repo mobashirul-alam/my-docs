@@ -3,6 +3,7 @@
 import { FontSizeExtension } from "@/extensions/font-size";
 import { LineHeightExtension } from "@/extensions/line-height";
 import { useEditorStore } from "@/store/use-editor-store";
+import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
 import Highlight from "@tiptap/extension-highlight";
@@ -21,9 +22,11 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import ImageResize from "tiptap-extension-resize-image";
 import { Ruler } from "./ruler";
+import { Threads } from "./threads";
 
 export const Editor = () => {
     const { setEditor } = useEditorStore();
+    const liveblocks = useLiveblocksExtension();
 
     const editor = useEditor({
         immediatelyRender: false,
@@ -58,7 +61,10 @@ export const Editor = () => {
             },
         },
         extensions: [
-            StarterKit,
+            liveblocks,
+            StarterKit.configure({
+                history: false,
+            }),
             TaskItem.configure({
                 nested: true, // Enable nested tasks
             }),
@@ -96,6 +102,7 @@ export const Editor = () => {
             <Ruler />
             <div className="min-w-max flex justify-center w-[816px] px-4 py-4 print:py-0 mx-auto print:w-full print:min-h-0">
                 <EditorContent editor={editor} />
+                <Threads editor={editor} />
             </div>
         </div>
     );
