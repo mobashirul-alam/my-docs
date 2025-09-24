@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Docs - Real-time Collaborative Document Editor
+
+My Docs is a modern, real-time collaborative document editing platform built with Next.js. Create, edit, and collaborate on documents with others in real-time, using a variety of pre-built templates to kickstart your work.
+
+🌐 **Live Link**: [https://my-docs-web.vercel.app](https://my-docs-web.vercel.app)
+
+## Features
+
+- ✨ Real-time collaboration using Liveblocks
+- 📄 Rich text editing with TipTap
+- 🎨 Multiple document templates
+- 🔍 Full-text search capabilities
+- 💾 Automatic saving and version control
+- 🎯 Modern, responsive UI using Radix UI
+- 🔒 Authentication with Clerk
+- ⚡ Powered by Convex backend
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up your environment variables:
+    - Create a `.env.local` file
+    - Add your Clerk, Liveblocks, and Convex credentials
+
+4. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) to view the application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: Next.js 15+ with TypeScript
+- **Real-time Collaboration**: Liveblocks
+- **Backend**: Convex
+- **Authentication**: Clerk
+- **UI Components**: Shadcn UI
+- **Styling**: Tailwind CSS
+- **Font**: Inter
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+The project structure follows Next.js 15 App Router conventions:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/app` - Application routes and pages
+- `/components` - Reusable UI components
+- `/convex` - Backend API and schema definitions
+- `/hooks` - Custom React hooks
+- `/lib` - Utility functions and helpers
