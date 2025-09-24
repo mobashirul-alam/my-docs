@@ -3,12 +3,12 @@ import { Navbar } from "./navbar";
 import { Room } from "./room";
 import { Toolbar } from "./toolbar";
 
-interface DocumentPageProps {
+interface DocumentIdPageProps {
     params: Promise<{ documentId: string }>;
 }
-const DocumentPage = async ({ params }: DocumentPageProps) => {
+const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
     const { documentId } = await params;
-    console.log(documentId);
+    console.log(documentId); // remove console logs after using them
 
     return (
         <div className="min-h-screen bg-[#FAFBFD]">
@@ -25,4 +25,4 @@ const DocumentPage = async ({ params }: DocumentPageProps) => {
     );
 };
 
-export default DocumentPage;
+export default DocumentIdPage;
