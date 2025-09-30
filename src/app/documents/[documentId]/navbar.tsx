@@ -39,6 +39,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import { Avatars } from "./avatars";
 import { DocumentInput } from "./document-input";
+import { Inbox } from "./inbox";
 
 /**
  * Navbar component for the document editor interface.
@@ -358,6 +359,7 @@ export const Navbar = () => {
             </div>
             <div className="flex gap-3 items-center pl-6">
                 <Avatars />
+                <Inbox />
                 <OrganizationSwitcher
                     afterCreateOrganizationUrl="/"
                     afterLeaveOrganizationUrl="/"
