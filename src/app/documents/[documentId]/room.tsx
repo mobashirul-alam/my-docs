@@ -1,20 +1,101 @@
 "use client";
 
+import { FullScreenLoader } from "@/components/loader/fullscreen-loader";
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
 import {
     ClientSideSuspense,
     LiveblocksProvider,
     RoomProvider,
 } from "@liveblocks/react/suspense";
 import { useParams } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
+import { Id } from "../../../../convex/_generated/dataModel";
+import { getDocuments, getUsers } from "./actions";
+
+type User = {
+    id: string;
+    name: string;
+    avatar: string;
+};
 
 export function Room({ children }: { children: ReactNode }) {
     const params = useParams();
 
+    const [users, setUsers] = useState<User[]>([]);
+
+    const fetchUsers = useMemo(
+        () => async () => {
+            try {
+                const list = await getUsers();
+                setUsers(list);
+            } catch {
+                toast.error("Failed to fetch users");
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]);
+
     return (
-        <LiveblocksProvider throttle={16} authEndpoint={"/api/liveblocks-auth"}>
-            <RoomProvider id={params.documentId as string}>
-                <ClientSideSuspense fallback={<div>Loading…</div>}>
+        <LiveblocksProvider
+            throttle={16}
+            authEndpoint={async () => {
+                const endpoint = "/api/liveblocks-auth";
+                const room = params.documentId as string;
+
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    body: JSON.stringify({ room }),
+                });
+
+                return await response.json();
+            }}
+            resolveUsers={({ userIds }) => {
+                const usersWithColor = userIds.map((userId) => {
+                    const user = users.find((user) => user.id === userId);
+                    return user
+                        ? { ...user, color: "defaultColor" }
+                        : undefined;
+                });
+                return usersWithColor;
+            }}
+            resolveMentionSuggestions={({ text }) => {
+                let filteredUsers = users;
+
+                if (text) {
+                    filteredUsers = users.filter((user) => {
+                        return user.name
+                            .toLowerCase()
+                            .includes(text.toLowerCase());
+                    });
+                }
+
+                return filteredUsers.map((user) => user.id);
+            }}
+            resolveRoomsInfo={async ({ roomIds }) => {
+                const documents = await getDocuments(
+                    roomIds as Id<"documents">[]
+                );
+                return documents.map((document) => ({
+                    id: document.id,
+                    name: document.name,
+                }));
+            }}
+        >
+            <RoomProvider
+                id={params.documentId as string}
+                initialStorage={{
+                    leftMargin: LEFT_MARGIN_DEFAULT,
+                    rightMargin: RIGHT_MARGIN_DEFAULT,
+                }}
+            >
+                <ClientSideSuspense
+                    fallback={<FullScreenLoader label="Room Loading..." />}
+                >
                     {children}
                 </ClientSideSuspense>
             </RoomProvider>
