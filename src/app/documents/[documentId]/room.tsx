@@ -1,6 +1,7 @@
 "use client";
 
 import { FullScreenLoader } from "@/components/loader/fullscreen-loader";
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margins";
 import {
     ClientSideSuspense,
     LiveblocksProvider,
@@ -12,7 +13,11 @@ import { toast } from "sonner";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { getDocuments, getUsers } from "./actions";
 
-type User = { id: string; name: string; avatar: string };
+type User = {
+    id: string;
+    name: string;
+    avatar: string;
+};
 
 export function Room({ children }: { children: ReactNode }) {
     const params = useParams();
@@ -50,9 +55,13 @@ export function Room({ children }: { children: ReactNode }) {
                 return await response.json();
             }}
             resolveUsers={({ userIds }) => {
-                return userIds.map((userId) =>
-                    users.find((user) => user.id === userId)
-                );
+                const usersWithColor = userIds.map((userId) => {
+                    const user = users.find((user) => user.id === userId);
+                    return user
+                        ? { ...user, color: "defaultColor" }
+                        : undefined;
+                });
+                return usersWithColor;
             }}
             resolveMentionSuggestions={({ text }) => {
                 let filteredUsers = users;
@@ -79,7 +88,10 @@ export function Room({ children }: { children: ReactNode }) {
         >
             <RoomProvider
                 id={params.documentId as string}
-                initialStorage={{ leftMargin: 56, rightMargin: 56 }}
+                initialStorage={{
+                    leftMargin: LEFT_MARGIN_DEFAULT,
+                    rightMargin: RIGHT_MARGIN_DEFAULT,
+                }}
             >
                 <ClientSideSuspense
                     fallback={<FullScreenLoader label="Room Loading..." />}
