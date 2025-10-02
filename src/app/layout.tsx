@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     title: "My Docs: Your Premier Hub for Effortless Document Creation",
     description:
         "My Docs - A cutting-edge document creation and collaboration platform built with Next.js, Shadcn, TypeScript, and Tailwind CSS. Seamlessly craft and collaborate on your documents with flair.",
+    icons: {
+        icon: "/favicon.svg",
+    },
 };
 
 export default function RootLayout({
